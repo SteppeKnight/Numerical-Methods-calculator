@@ -1,7 +1,13 @@
 package View;
 
+import EulerMethod.EulerMethod;
+import  ErrorWindow.ErrorWindow;
+
+import javax.script.ScriptException;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class EulerWindow {
     JFrame jFrame = new JFrame();
@@ -73,7 +79,7 @@ public class EulerWindow {
         gridBagConstraints.gridy = interval2.getY() + 5;
         gridBagConstraints.insets = new Insets(5, 100, 20, 2);
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-        JTextField stepH = new HintTextField("Step H");
+        JTextField stepH = new HintTextField("Parts");
         stepH.setSize(50, 30);
         gridBagLayout.setConstraints(stepH ,gridBagConstraints);
         jPanel.add(stepH);
@@ -122,6 +128,30 @@ public class EulerWindow {
         calculate.setBackground(new Color(127, 255, 212));
         gridBagLayout.setConstraints(calculate, gridBagConstraints);
         jPanel.add(calculate);
+
+        calculate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String function = equation.getText().substring(5);
+                try {
+                    int a = Integer.valueOf(interval1.getText());
+                    int b = Integer.valueOf(interval2.getText());
+                    int x = Integer.valueOf(init1.getText());
+                    double y = Double.valueOf(init2.getText());
+                    int n = Integer.valueOf(stepH.getText());
+                    new EulerMethod(function, x, y, a, b, n);
+                }  catch (NumberFormatException e3) {
+                    e3.printStackTrace();
+                    new ErrorWindow("Wrong input format!");
+                } catch (ScriptException e1){
+                    e1.printStackTrace();
+                    new ErrorWindow("Something wrong with JavaScript, please, check your initial data.");
+                } catch (Exception e2){
+                    e2.printStackTrace();
+                    new ErrorWindow("Check initial data, if it's not working... well, I'm sorry :(");
+                }
+            }
+        });
 
         jPanel.revalidate();
     }
