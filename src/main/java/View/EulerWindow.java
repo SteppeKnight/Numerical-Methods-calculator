@@ -70,13 +70,18 @@ public class EulerWindow {
         gridBagLayout.setConstraints(interval2, gridBagConstraints);
         jPanel.add(interval2);
 
+        gridBagConstraints.gridy = interval2.getY() + 5;
+        gridBagConstraints.insets = new Insets(5, 100, 20, 2);
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         JTextField stepH = new HintTextField("Step H");
         stepH.setSize(50, 30);
         gridBagLayout.setConstraints(stepH ,gridBagConstraints);
         jPanel.add(stepH);
 
+        gridBagConstraints.gridy = GridBagConstraints.RELATIVE;
+        gridBagConstraints.fill   = GridBagConstraints.NONE;
         gridBagConstraints.gridx = GridBagConstraints.REMAINDER;
-        gridBagConstraints.insets = new Insets(5, 3, 10, 3);
+        gridBagConstraints.insets = new Insets(5, 10, 10, 3);
         gridBagConstraints.ipadx = 0;
         gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
 
@@ -86,20 +91,22 @@ public class EulerWindow {
         jPanel.add(condLabel);
 
         gridBagConstraints.fill = GridBagConstraints.NONE;
-        gridBagConstraints.insets = new Insets(5, 2, 20, 2);
+        gridBagConstraints.insets = new Insets(5, 50, 20, 50);
         gridBagConstraints.gridwidth = 1;
         gridBagConstraints.ipadx = 30;
         gridBagConstraints.gridx = GridBagConstraints.RELATIVE;
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 
 
-        JTextField init1 = new HintTextField("For x = ... ");
+        JTextField init1 = new HintTextField("x = ... ");
         init1.setSize(50, 30);
         gridBagLayout.setConstraints(init1 ,gridBagConstraints);
         jPanel.add(init1);
 
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new Insets(5, 2, 20, 2);
 
-        JTextField init2 = new HintTextField("Y is equal to ...");
+        JTextField init2 = new HintTextField("y(x) = ... ");
         init2.setSize(50, 30);
         gridBagLayout.setConstraints(init2, gridBagConstraints);
         jPanel.add(init2);
@@ -107,6 +114,7 @@ public class EulerWindow {
         gridBagConstraints.insets = new Insets(2, 30, 5, 2);
         gridBagConstraints.anchor = GridBagConstraints.WEST;
         gridBagConstraints.gridx = GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
 
         JButton calculate = new JButton("Evaluate");
         calculate.setSize(40, 15);
@@ -116,9 +124,9 @@ public class EulerWindow {
         jPanel.add(calculate);
 
 
+
         JButton back = new JButton("Back");
         back.setSize(40, 15);
-        gridBagConstraints.gridwidth = 1;
         back.setBackground(new Color(127, 255, 212));
         gridBagLayout.setConstraints(calculate, gridBagConstraints);
         jPanel.add(back);
