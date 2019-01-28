@@ -95,7 +95,9 @@ public class EulerMethod {
             graphics2D.setPaint(Color.RED);
             Set<Double> x_es= getValues().keySet(); // Set of x-values
             List<Double> x_list = x_es.stream().sorted((x, y) -> x.compareTo(y)).collect(Collectors.toList());
-            x_list.forEach(x -> System.out.println(x));
+            for(Double i : x_list){
+                System.out.println(i + "    -|-    " + getValues().get(i));
+            }
             x_es = null;
             System.gc();
             for(double i : x_list){

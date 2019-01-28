@@ -22,8 +22,17 @@ public class MainWindow {
         JButton eulerDiffEq = new JButton("Euler's dif.eq"); // Создание кнопки для методы Эйлера
         eulerDiffEq.setSize(30, 10);
 
+        JButton rungeKutta = new JButton("Runge-Kutta meth.");
+        rungeKutta.setSize(30,10);
+        rungeKutta.setLocation(mainLabel.getX(), mainLabel.getY() + 30);
+
+        JButton nextMeth = new JButton("Next time");
+        nextMeth.setSize(30, 10);
+
         jPanel.add(mainLabel);
         jPanel.add(eulerDiffEq);
+        jPanel.add(rungeKutta);
+        jPanel.add(nextMeth);
 
         eulerDiffEq.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
