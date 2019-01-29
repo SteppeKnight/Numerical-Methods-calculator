@@ -42,6 +42,8 @@ public class EulerMethod {
 
     public void calculateEuler(int x, double y, int a, int b, String func, int n) throws ScriptException {
         double h = (double)(b - a)/n;
+        ScriptEngineManager mgr = new ScriptEngineManager();
+        ScriptEngine engine = mgr.getEngineByName("JavaScript"); // Подключение библиотеки JavaScript
         for(double i = a; i <= b; i += h) {
             values.put(i, y);
             String iStr = String.valueOf(i);
@@ -51,8 +53,6 @@ public class EulerMethod {
             iStr = null;
             System.gc();
             String currentFunc = functionMaker(func, i, y);
-            ScriptEngineManager mgr = new ScriptEngineManager();
-            ScriptEngine engine = mgr.getEngineByName("JavaScript"); // Подключение библиотеки JavaScript
             y += h * (Double)engine.eval(currentFunc);
         }
     }

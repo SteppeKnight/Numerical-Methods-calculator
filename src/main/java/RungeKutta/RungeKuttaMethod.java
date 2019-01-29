@@ -1,102 +1,122 @@
 package RungeKutta;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.geom.Line2D;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class RungeKuttaMethod {
     private HashMap<Double, Double> values = new HashMap<Double, Double>();
-    private HashMap<Double, Double> valuesZ = new HashMap<Double, Double>();
 
-    private double func(double x, double y){
-        return 0.25 * y * y + x * x;
+    private final int X = 30;
+    private final int Y = 350;
+    private int SCALE = 20;
+    private int SCALE_Y = 5;
+    private double step;  // Переменная для хранения значения для одной риски на графике
+
+    public RungeKuttaMethod(String func, int x, double y, double a, double b, int n) throws ScriptException{
+        this.step = ((double)(a+b)/n);
+        this.SCALE = 270/n;
+        this.step /= SCALE;
+
+        calculateRunge(func, x, y, a, b,  n);
+
+        JFrame jFrame = new JFrame();
+        jFrame.setVisible(true);
+        Toolkit tolls = Toolkit.getDefaultToolkit();
+        Dimension dim = tolls.getScreenSize();
+        jFrame.setBounds(dim.width/2 - 250, dim.height/2 - 150, 500, 500 );
+        jFrame.setResizable(false);
+        jFrame.setTitle("Results");
+        jFrame.add(new RungeKuttaMethod.MyComponent());
     }
 
-    private double func2(double x, double y){
-        return y - x;
-    }
-    private double func3(double x, double y){
-        return y/x - y * y;
-    }
-
-    private double func4(double x, double y){
-        return y/x - y * y;
-    }
-
-    private double func5(double x, double y, double z){
-        return z + 1;
-    }
-    private  double func52 (double x, double y, double z){
-        return y - x;
-    }
-
-    public void calculateRunge(int x, double y, double a, double b, int n){
+    private void calculateRunge(String func, int x, double y, double a, double b, int n) throws ScriptException {
           double h = (a + b) / n;
+        ScriptEngineManager mgr = new ScriptEngineManager();
+        ScriptEngine engine = mgr.getEngineByName("JavaScript"); // Подключение библиотеки JavaScript
           for(double i = a; i <= b; i += h){
               values.put(i, y);
-              double k1 = func2(i, y);
-              double k2 = func2(i + h/2, y + k1 * h/2 );
-              double k3 = func2(i + h/2, y + k2 * h/2);
-              double k4 = func2(i + h, y + h * k3);
-
+              String iStr = String.valueOf(i);
+              if(iStr.length() > 3){
+                  i = Double.valueOf(iStr.substring(0, 4));
+              }
+              iStr = null;
+              System.gc();
+              String currentFunc = functionMaker(func, i, y);
+              double k1 = (Double)engine.eval(currentFunc);
+              currentFunc = functionMaker(func, i + h/2, y + k1 * h/2 );
+              double k2 = (Double)engine.eval(currentFunc);
+              currentFunc = functionMaker(func, i + h/2, y + k2 * h/2);
+              double k3 = (Double)engine.eval(currentFunc);
+              currentFunc = functionMaker(func,i + h,y + h * k3);
+              double k4 = (Double)engine.eval(currentFunc);
               y += h*(k1 + 2 * k2 + 2 * k3 + k4)/6;
           }
       }
 
-    public HashMap<Double, Double> getValuesZ() {
-        return valuesZ;
+    private String functionMaker(String str, double x, double y){ // Фунцкия создаёт рабочее математическое выражение из строки
+        StringBuffer func = new StringBuffer(str);                // заменяя нейзвестные на числа
+        for(int i = 0; i < func.length(); i++){
+            char c = func.charAt(i);
+            if (c == 'x') {
+                StringBuffer var = new StringBuffer(Double.toString(x));
+                if (var.length() < 6) {
+                    func.replace(i, i + 1, var.toString());
+                } else {
+                    func.replace(i, i + 1, var.substring(0, 6));
+                }
+            } else if(c == 'y'){
+                StringBuffer var = new StringBuffer(Double.toString(y));
+                if (var.length() < 6) {
+                    func.replace(i, i + 1, var.toString());
+                } else {
+                    func.replace(i, i + 1, var.substring(0, 6));
+                }
+            }
+        }
+        return func.toString();
     }
 
-    public void calculateRungeSys(int x, double y, double z, double a, double b, int n){
-          double h = (a + b) / n;
-          for(double i = a; i <= b; i += h){
-              values.put(i, y);
-              valuesZ.put(i, z);
-              double k1 = func5(i, y, z);
-              double k2 = func5(i + h/2, y + k1 * h/2, z+ k1 * h/2);
-              double k3 = func5(i + h/2, y + k2 * h/2, z+ k1 * h/2);
-              double k4 = func5(i + h, y + h * k3, z + h * k3);
+    private class MyComponent extends JComponent{
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D graphics2D = (Graphics2D) g;
+            Line2D x_axis = new Line2D.Double(X, Y, Y, Y);
+            Line2D y_axis = new Line2D.Double(X, Y, X, X);
+            graphics2D.draw(x_axis);
+            graphics2D.draw(y_axis);
+            double stepX = X - SCALE;
+            double stepY = Y;
+            graphics2D.setPaint(Color.RED);
+            Set<Double> x_es= getValues().keySet(); // Set of x-values
+            List<Double> x_list = x_es.stream().sorted((x, y) -> x.compareTo(y)).collect(Collectors.toList());
+            for(Double i : x_list){
+                System.out.println(i + "    -|-    " + getValues().get(i));
+            }
+            x_es = null;
+            System.gc();
+            for(double i : x_list){
+                double nextVal = getValues().get(i);
+                double nextX = stepX + SCALE;
+                double nextY = Y - nextVal/(SCALE_Y * step);
+                Line2D eulerLine = new Line2D.Double(stepX, stepY, nextX, nextY);
+                graphics2D.draw(eulerLine);
+                graphics2D.drawString(String.valueOf(i).substring(0, 3), (float)nextX, (float) 330);
+                graphics2D.drawString(String.valueOf(nextVal).substring(0, 3), (float) 7, (float) nextY);
 
-              y += h*(k1 + 2 * k2 + 2 * k3 + k4)/6;
+                stepX = nextX;
+                stepY = nextY;
+            }
 
-              double k12 = func52(i, y, z);
-              double k22 = func52(i + h/2, y + k1 * h/2, z+ k1 * h/2);
-              double k32 = func52(i + h/2, y + k2 * h/2, z+ k1 * h/2);
-              double k42 = func52(i + h, y + h * k3, z + h * k3);
-
-              z += h*(k12 + 2 * k22 + 2 * k32 + k42)/6;
-
-          }
-      }
-
-    public static void main(String[] args) {
-        System.out.println("Enter the x0, y0, a, b ,z and n");
-        Scanner scanner = new Scanner(System.in);
-        RungeKuttaMethod rungeKuttaMethod = new RungeKuttaMethod();
-        int x = scanner.nextInt();
-        double y = scanner.nextDouble();
-        double a = scanner.nextDouble();
-        double b = scanner.nextDouble();
-        double z = scanner.nextDouble();
-        int n = scanner.nextInt();
-        rungeKuttaMethod.calculateRungeSys(x, y,z, a, b, n);
-        //rungeKuttaMethod.calculateRunge(x, y, a, b, n);
-        Set<Double> keys = rungeKuttaMethod.getValues().keySet();
-        List<Double> x_list = keys.stream().sorted((k, t) -> k.compareTo(t)).collect(Collectors.toList());
-        System.out.println("Func Y: ");
-        for(Double i : x_list){
-            System.out.println(i + "    -|-    " + rungeKuttaMethod.getValues().get(i));
 
         }
-        System.out.println(" ");
-        System.out.println("Func Z: ");
-        for (Double i : x_list){
-            System.out.println(i + "    -|-    " + rungeKuttaMethod.getValuesZ().get(i));
-        }
-
-
     }
 
     public HashMap<Double, Double> getValues() {

@@ -1,5 +1,7 @@
 package View;
 
+import RungeKutta.RungeKuttaMethod;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -37,8 +39,16 @@ public class MainWindow {
         eulerDiffEq.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 jFrame.setVisible(false);
-                EulerWindow eulerWindow = new EulerWindow();
+                new EulerWindow();
 
+                jFrame.dispose();
+            }
+        });
+        rungeKutta.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jFrame.setVisible(false);
+                new RungeKuttaWindow(); // Для Рунге-Кутты подходит то же окно, что и у Эйлера
                 jFrame.dispose();
             }
         });
