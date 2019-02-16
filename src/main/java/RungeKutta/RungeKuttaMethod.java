@@ -12,16 +12,16 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class RungeKuttaMethod {
-    private HashMap<Double, Double> values = new HashMap<Double, Double>();
+    private HashMap<Double, Double> values = new HashMap<>();
 
     private final int X = 30;
     private final int Y = 350;
-    private int SCALE = 20;
+    private int SCALE;
     private int SCALE_Y = 5;
     private double step;  // Переменная для хранения значения для одной риски на графике
 
     public RungeKuttaMethod(String func, int x, double y, double a, double b, int n) throws ScriptException{
-        this.step = ((double)(a+b)/n);
+        this.step = (a+b)/n;
         this.SCALE = 270/n;
         this.step /= SCALE;
 
@@ -102,7 +102,7 @@ public class RungeKuttaMethod {
             }
             x_es = null;
             System.gc();
-            for(double i : x_list){
+            for(double i : x_list){ //Рисуем график по точкам
                 double nextVal = getValues().get(i);
                 double nextX = stepX + SCALE;
                 double nextY = Y - nextVal/(SCALE_Y * step);
@@ -119,7 +119,7 @@ public class RungeKuttaMethod {
         }
     }
 
-    public HashMap<Double, Double> getValues() {
+    private HashMap<Double, Double> getValues() {
         return values;
     }
 }

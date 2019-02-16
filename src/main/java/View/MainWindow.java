@@ -1,7 +1,5 @@
 package View;
 
-import RungeKutta.RungeKuttaMethod;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -28,13 +26,13 @@ public class MainWindow {
         rungeKutta.setSize(30,10);
         rungeKutta.setLocation(mainLabel.getX(), mainLabel.getY() + 30);
 
-        JButton nextMeth = new JButton("Next time");
-        nextMeth.setSize(30, 10);
+        JButton puassonEq = new JButton("Sweep method for Puasson's level");
+        puassonEq.setSize(30, 10);
 
         jPanel.add(mainLabel);
         jPanel.add(eulerDiffEq);
         jPanel.add(rungeKutta);
-        jPanel.add(nextMeth);
+        jPanel.add(puassonEq);
 
         eulerDiffEq.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -52,8 +50,15 @@ public class MainWindow {
                 jFrame.dispose();
             }
         });
+        puassonEq.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jFrame.setVisible(false);
+                new PuassonWindow();
+                jFrame.dispose();
+            }
+        });
     }
-
 
     static JFrame getJFrame(){ // Создание пустого окна
         JFrame jFrame = new JFrame();
@@ -66,5 +71,6 @@ public class MainWindow {
         jFrame.setTitle("SteppeKnight NMC-2");
         return  jFrame;
     }
+
 
 }
