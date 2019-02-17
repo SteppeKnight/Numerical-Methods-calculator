@@ -3,7 +3,7 @@ package PuassonEquation;
 import java.util.HashMap;
 
 public class PuassonEquation {
-    private HashMap<Integer, Double> P;
+    private HashMap<Integer , Double> P;
     private HashMap<Integer, Double> alpha;
     private HashMap<Integer, Double> betta;
 
@@ -19,18 +19,18 @@ public class PuassonEquation {
     }
 
     public void calculatePuasson(double x0, double xn, double f, int n){
-        double deltaX = (xn - x0) / n;
-        double A = 1/Math.pow(deltaX, 2);
+        double deltaX = roundToTheFourthPoint((xn - x0) / n);
+        double A = roundToTheFourthPoint(1/Math.pow(deltaX, 2));
         double C = A;
-        double B = - 2 / Math.pow(deltaX, 2);
+        double B = roundToTheFourthPoint(- 2 / Math.pow(deltaX, 2));
         for(int i = 2; i <= n; i++){
-            double alphaVar = A/(B + C * alpha.get(i-1));
-            double bettaVar = (f - C * betta.get(i-1))/(B + C * alpha.get(i-1));
+            double alphaVar = roundToTheFourthPoint(A/(B + C * alpha.get(i-1)));
+            double bettaVar = roundToTheFourthPoint((f - C * betta.get(i-1))/(B + C * alpha.get(i-1)));
             alpha.put(i, alphaVar);
             betta.put(i, bettaVar);
         }
         for(int i = n-1; i > 0; i--){
-            double pVar = alpha.get(i + 1) * P.get(i + 1) + betta.get(i + 1);
+            double pVar = roundToTheFourthPoint(alpha.get(i + 1) * P.get(i + 1) + betta.get(i + 1));
             P.put(i, pVar);
         }
     }
@@ -39,11 +39,10 @@ public class PuassonEquation {
         return P;
     }
 
-    public static void main(String[] args) {
-        PuassonEquation pe = new PuassonEquation(0, 1, 20, 0, 0, 10, 0, 1);
-        HashMap hm = pe.getP();
-        for(int i = 0; i <= 10; i++){
-            System.out.println("P"+i+"   =>   "+ hm.get(i));
-        }
+    static double roundToTheFourthPoint(double d){ // Method to round part after point to four digits.
+        d *= 10000;
+        int temp = (int)Math.round(d);
+        d = (double)temp/10000;
+        return d;
     }
 }

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="View.PuassonWindow">
+  <grid id="27dc6" binding="jPanel" layout-manager="GridBagLayout">
+    <constraints>
+      <xy x="-23" y="8" width="787" height="288"/>
+    </constraints>
+    <properties>
+      <font name="Bernard MT Condensed" size="12" style="2"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <component id="b1d1c" class="javax.swing.JTextField" binding="nField">
+        <constraints>
+          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+          <gridbag top="10" left="100" bottom="0" right="0" weightx="0.0" weighty="0.0" ipadx="40" ipady="14"/>
+        </constraints>
+        <properties>
+          <text value="Enter the 'n'"/>
+        </properties>
+      </component>
+      <component id="83a0e" class="javax.swing.JTextField" binding="FiField">
+        <constraints>
+          <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="4" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+          <gridbag top="10" left="0" bottom="0" right="100" weightx="0.0" weighty="0.0" ipadx="40" ipady="14"/>
+        </constraints>
+        <properties>
+          <horizontalAlignment value="4"/>
+          <text value="Enter the Fi"/>
+        </properties>
+      </component>
+      <component id="bdef5" class="javax.swing.JTextField" binding="alphaField">
+        <constraints>
+          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+          <gridbag top="10" left="100" bottom="0" right="0" weightx="0.0" weighty="0.0" ipadx="40" ipady="14"/>
+        </constraints>
+        <properties>
+          <horizontalAlignment value="2"/>
+          <text value="Enter the alpha"/>
+        </properties>
+      </component>
+      <component id="74be2" class="javax.swing.JTextField" binding="bettaField">
+        <constraints>
+          <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="4" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+          <gridbag top="10" left="0" bottom="0" right="100" weightx="0.0" weighty="0.0" ipadx="40" ipady="14"/>
+        </constraints>
+        <properties>
+          <horizontalAlignment value="4"/>
+          <text value="Enter the betta"/>
+        </properties>
+      </component>
+      <hspacer id="ba784">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+      </hspacer>
+      <component id="ce9ed" class="javax.swing.JButton" binding="calculateButton" default-binding="true">
+        <constraints>
+          <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="6" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag top="15" left="15" bottom="15" right="85" weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <text value="Calculate"/>
+        </properties>
+      </component>
+      <component id="10f2e" class="javax.swing.JLabel" binding="textFieldLabel">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag top="10" left="100" bottom="0" right="0" weightx="0.0" weighty="0.0" ipadx="70" ipady="14"/>
+        </constraints>
+        <properties>
+          <text value="Enter the initial data..."/>
+        </properties>
+      </component>
+      <component id="64690" class="javax.swing.JTextField" binding="zeroCond">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+          <gridbag top="10" left="100" bottom="0" right="0" weightx="0.0" weighty="0.0" ipadx="40" ipady="14"/>
+        </constraints>
+        <properties>
+          <text value="P( ) ="/>
+        </properties>
+      </component>
+      <component id="edff4" class="javax.swing.JLabel" binding="formulas">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <gridbag top="0" left="40" bottom="0" right="0" weightx="0.0" weighty="0.0" ipadx="300" ipady="10"/>
+        </constraints>
+        <properties>
+          <horizontalAlignment value="0"/>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="8db5d" class="javax.swing.JTextField" binding="lastCond">
+        <constraints>
+          <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="4" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+          <gridbag top="10" left="0" bottom="0" right="100" weightx="0.0" weighty="0.0" ipadx="40" ipady="14"/>
+        </constraints>
+        <properties>
+          <horizontalAlignment value="4"/>
+          <text value="P( ) =  "/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
